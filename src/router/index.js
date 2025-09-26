@@ -23,8 +23,8 @@
 
 
 import { createWebHistory, createRouter } from 'vue-router';
-import pokemonCard from '../pokemonCard.vue';
-import pokemonDetail from '../pokemonDetail.vue';
+import pokemonCard from '../pages/pokemonCard.vue';
+import pokemonDetail from '../pages/pokemonDetail.vue';
 import Home from '../pages/Home.vue'
 
 const routes = [
@@ -34,7 +34,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+    history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
