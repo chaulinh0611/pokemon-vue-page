@@ -9,11 +9,16 @@ const quote = ref(null);
 const evolutionPokemon = ref([]);
 
 async function fetchPokemon() {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${route.params.name}`);
-    pokemon.value = await res.json();
+    const route = useRoute();
+    const name = route.params.name; 
+     if (!name) return;
+    if(name){
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        pokemon.value = await res.json();
 
-    const speciesRes = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${route.params.name}`);
-    quote.value = await speciesRes.json(); 
+        const speciesRes = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+        quote.value = await speciesRes.json(); 
+    }
 
      // Lấy chuỗi tiến hóa
      const evolutionRes = await fetch(quote.value.evolution_chain.url);
@@ -35,8 +40,10 @@ async function fetchEvolutionPokemon(chain){
     await checkEvolution(chain);
 }
 const flavorText = computed(() => {
-    const flavor = quote.value.flavor_text_entries.find(entry => entry.language.name === "en");
-    return flavor.flavor_text.replace(/\n|\f/g, ' ').replaceAll("▲", "▲");
+    const entries = quote.value?.flavor_text_entries; // optional chaining
+    if (!entries) return ''; // nếu chưa có dữ liệu, trả về chuỗi rỗng
+    const flavor = entries.find(entry => entry.language.name === "en");
+    return flavor?.flavor_text?.replace(/\n|\f/g, ' ') || '';
 });
 
 // const  savedData = JSON.parse
