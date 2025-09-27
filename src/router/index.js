@@ -22,7 +22,7 @@
 // export default router;
 
 
-import { createWebHistory, createRouter } from 'vue-router';
+import { createWebHashHistory, createRouter } from 'vue-router';
 import pokemonCard from '../pages/pokemonCard.vue';
 import pokemonDetail from '../pages/pokemonDetail.vue';
 import Home from '../pages/Home.vue'
